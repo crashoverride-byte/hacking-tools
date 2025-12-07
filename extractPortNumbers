@@ -1,0 +1,13 @@
+function extractPortNumber(){
+    cat ports.nmap | grep open | awk '{print $1}' | tr -d 'tcp' > allPorts
+    
+    ports=$(for p in $(cat allPorts); do 
+        echo -n $p; 
+    done | sed 's:/$::; s:/:,:g')
+
+    echo -n $ports | pbcopy
+
+    echo -e "\n [+] Copied ports: $ports"
+
+    rm allPorts ports.nmap
+}
